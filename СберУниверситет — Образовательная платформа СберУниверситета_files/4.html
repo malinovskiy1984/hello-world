@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://prog-center.pro/sber/task/4?runMode=autorun -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title></title>
+	
+	<link href="./style_web_14.css" rel="stylesheet">
+</head>
+<body marginwidth="0" marginheight="0">
+	<div class="submit_box">
+		<button id="submit">Запустить</button>
+		<p>Код: <span id="code">Выполните задание для получения проверочного кода.</span></p>
+	</div>
+	<div class="trigger">
+		<div class=""><h3>Task</h3></div>
+		<div><h3>HTML</h3></div>
+		<div class="active"><h3>CSS</h3></div>
+		<div class=""><h3>Result</h3></div>
+		<div class=""><h3>Tests</h3></div>
+	</div>
+	<div class="fields">
+		<div class="field" style="z-index: 0;">
+			<div class="task">
+				<ul>
+	<li>
+		Необходимо в <span class="code">section</span> с 
+		<span class="code">id="pullover"</span> растянуть задний фон по горизонтали (значение свойства <span class="code">auto 100%</span>) .</li>
+	<li>
+		Необходимо в <span class="code">section</span> с 
+		<span class="code">id="bike"</span> реализовать темно-зеленый фон <span class="code">darkgreen</span>. Сама картинка велосипеда не должна повторяться.</li>
+	<li>
+		Необходимо в <span class="code">section</span> с <span class="code">id="photo"</span> вставить фото по центру и масштабировать его максимально, но чтобы картинка не сплющивалась, а обрезалась (используйте свойства <span class="code">background-size</span>  и <span class="code">background-position</span>, подберите для них нужные значения).</li>
+</ul>
+			</div>
+		</div>
+		<div class="field" style="z-index: 0;">
+			<textarea id="html" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+&#39;\t&#39;+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
+		</div>
+		<div class="field" style="z-index: 1;">
+			<textarea id="css" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+&#39;\t&#39;+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
+		</div>
+		<div class="field" style="z-index: 0;">
+			<div id="forResult"><iframe src="./saved_resource(1).html"></iframe></div>
+		</div>
+		<div class="field" style="z-index: 0;">
+			<ul id="testResult"><li class="pos">Необходимо в section с id pullover растянуть задний фон по горизонтали.</li><li class="neg">Необходимо в section с id bike реализовать темно-зеленый фон (darkgreen). Сама картинка велосипеда не должна повторяться.</li><li class="pos">Необходимо в section с id photo вставить фото по центру и масштабировать его максимально, но чтобы картинка не сплющивалась, а обрезалась (значение cover).</li></ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		const task_id = 4;
+		const strange_word = "KrajmAijVdsPMsWw0ZGw";
+	</script>
+	<script type="text/javascript">
+		const triggers = document.querySelectorAll('.trigger div');
+		const fieldArr = document.querySelectorAll('.field');
+		triggers.forEach(elem=>elem.addEventListener('click', function(){
+		    triggers.forEach(elem=>elem.classList.remove('active'));
+		    fieldArr.forEach(elem=>elem.style.zIndex = 0);
+		    this.classList.add('active');
+		    const fieldIndex =  [...triggers].indexOf(this);
+		    fieldArr[fieldIndex].style.zIndex = 1;
+		  })
+		)
+		triggers[0].click();
+		document.querySelector('#submit').click()
+	</script>
+	<script type="text/javascript">
+		const regexpStyle = /^[^{@]+{[^}]+}/gm;
+const html = document.querySelector('#html');
+const css  = document.querySelector('#css');
+let btn  = document.querySelector('#submit');
+
+
+html.value = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+</head>
+<body>
+<section class='page' id='pullover'> </section>
+<section class='page' id='bike'> </section>
+<section class='page' id='photo'> </section>  
+</body>
+</html>
+
+`;
+
+css.value = `
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.page{
+  height: 700px;
+}
+
+
+#pullover{
+  background-image: url('https://img4.cliparto.com/pic/xl/247008/4945121-knit-woolen-seamless-ethnic-ornament-texture-fabri.jpg');
+}
+
+#bike{
+  background-position: left bottom;
+  background-size: 100px;
+  background-image: url('https://www.publicdomainpictures.net/pictures/290000/nahled/penny-farthing-bicycle.png');
+}
+
+#photo{
+   background-image: url('https://d.newsweek.com/en/full/1829968/rick-morty-peace-season-5.webp');
+}
+`;
+
+const cssHandler = (cssText, dom)=>{
+	[...cssText.match(regexpStyle)].map(style=>{
+		const selector = style.match(/^([^{@]+){/g)[0].replaceAll(/[\n{]/g, '');
+		const styleProps = style.match(/{[^}]+}/g)[0].replaceAll(/[\n{}]/g, '');
+		return [selector, styleProps]
+	}).forEach(style=>{
+		[...dom.querySelectorAll(style[0])].forEach(elem=>elem.style = elem.style.cssText+style[1]);
+	})
+
+}
+
+const inputHandler = ()=>{
+	const result = document.createElement('iframe');
+	document.querySelector('#forResult').innerText = '';
+	document.querySelector('#forResult').appendChild(result);
+	const innerDom = result.contentDocument;
+
+	const htmlValue = html.value;
+	const cssValue = css.value;
+	const styleTag = document.createElement('style');
+
+	styleTag.type = 'text/css';
+	if (styleTag.styleSheet){
+	  styleTag.styleSheet.cssText = cssValue;
+	} else {
+	  styleTag.appendChild(document.createTextNode(cssValue));
+	}
+	innerDom.write('');
+	innerDom.write(htmlValue);
+	try{
+		cssHandler(css.value, innerDom);
+	}catch{}
+	// innerDom.querySelector('head').appendChild(styleTag);
+};
+
+
+html.addEventListener('input', inputHandler);
+css.addEventListener('input', inputHandler);
+inputHandler();
+	</script>
+	<script type="text/javascript">
+		const tests = [
+	{
+		"msg": 'Необходимо в section с id pullover растянуть задний фон по горизонтали.',
+		"tag": 'section',
+		"class": undefined,
+		"id": 'pullover',
+		'styleList': {
+			'background-size': 'auto 100%'
+		}
+	},
+	{
+		"msg": 'Необходимо в section с id bike реализовать темно-зеленый фон (darkgreen). Сама картинка велосипеда не должна повторяться.',
+		"tag": 'section',
+		"class": undefined,
+		"id": 'bike',
+		'styleList': {
+			'background-color': 'darkgreen',
+			'background-repeat': 'no-repeat'
+		}
+	},
+	{
+		"msg": 'Необходимо в section с id photo вставить фото по центру и масштабировать его максимально, но чтобы картинка не сплющивалась, а обрезалась (значение cover).',
+		"tag": 'section',
+		"class": undefined,
+		"id": 'photo',
+		'styleList': {
+		  'background-size': 'cover',
+		  'background-position': 'center center'
+		}
+	}
+]
+
+
+const testHandler = ()=>{
+	const dom = document.querySelector('iframe').contentDocument;
+	document.querySelector('#testResult').innerText = '';
+
+	tests.forEach(elem=>{
+		const answer = document.createElement('li');
+
+		let selector = ''
+		if (elem.tag) selector	 += elem.tag;
+		if (elem.id) selector	 += `#${elem.id}`;
+		if (elem.class) selector += `.${elem.class}`;
+		let testResult = true;
+		if (dom.querySelectorAll(selector).length === 0){
+			testResult = false;	
+		}else{
+			dom.querySelectorAll(selector).forEach(selectorElem=>{
+				if (elem.innerText){
+					testResult &&= (selectorElem.innerText.trim() === elem.innerText);
+				}
+				try{
+					Object.entries(elem.styleList).forEach(style=>{
+					testResult &&= (selectorElem.style[style[0]] === style[1]);
+				})} catch{};
+			})
+		}
+		if (testResult){
+			answer.classList.add('pos');
+		}else{
+			answer.classList.add('neg');
+		}
+
+
+		answer.innerText = elem.msg;
+		document.querySelector('#testResult').appendChild(answer);
+	})
+}
+
+btn.addEventListener('click', testHandler);
+	</script>
+	<script type="text/javascript">document.querySelector('#submit').click()</script>
+	<script type="text/javascript" src="./calculate_code_obf.js.Без названия">
+	</script>
+
+</body></html>
